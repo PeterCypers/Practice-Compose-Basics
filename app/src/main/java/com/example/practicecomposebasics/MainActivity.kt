@@ -13,9 +13,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,11 +33,9 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    val title = stringResource(R.string.title)
-                    val intro = stringResource(R.string.intro)
-                    val body = stringResource(R.string.body)
-                    Article(title, intro, body)
-
+                    val tasksCompletedMsg = stringResource(R.string.all_tasks_completed)
+                    val niceWorkMsg = stringResource(R.string.nice_work)
+                    CompletedTask(tasksCompletedMsg, niceWorkMsg)
                 }
             }
         }
@@ -43,56 +43,40 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Composable
-fun Article(title: String, intro: String, body: String, modifier: Modifier = Modifier) {
-    val image = painterResource(R.drawable.bg_compose_background)
-    Column(
-        modifier = modifier
+fun CompletedTask(completion: String, feedback: String, modifier: Modifier = Modifier) {
+    val image = painterResource(R.drawable.ic_task_completed)
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-    Image(
-        painter = image,
-        contentDescription = null
-    )
-    Text(
-        text = title,
-        fontSize = 24.sp,
-        modifier = Modifier.padding(16.dp)
-    )
-    Text(
-        text = intro,
-        //fontSize = 12.sp,
-        lineHeight = 15.sp,
-        modifier = Modifier.padding(
-            start = 16.dp,
-            end = 16.dp
-        ),
-        textAlign = TextAlign.Justify
-    )
-    Text(
-        text = body,
-        fontSize = 12.sp,
-        lineHeight = 15.sp,
-        modifier = Modifier.padding(16.dp),
-        textAlign = TextAlign.Justify
-    )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = image,
+                contentDescription = null,
+
+            )
+            Text(
+                text = completion,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+            )
+            Text(
+                text = feedback,
+                fontSize = 24.sp,
+            )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ArticlePreview() {
-    val title = stringResource(R.string.title)
-    val intro = stringResource(R.string.intro)
-    val body = stringResource(R.string.body)
-
+    val tasksCompletedMsg = stringResource(R.string.all_tasks_completed)
+    val niceWorkMsg = stringResource(R.string.nice_work)
     PracticeComposeBasicsTheme {
-        Article(title, intro, body)
+        CompletedTask(tasksCompletedMsg, niceWorkMsg)
     }
 }
